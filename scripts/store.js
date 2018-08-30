@@ -1,6 +1,9 @@
 'use strict';
 
 const store = (function(){
+  const setError = function(error) {
+    this.error = error;
+  };
   
   const addItem = function(item) {
     this.items.push(item);
@@ -24,6 +27,7 @@ const store = (function(){
   
   return {
     items: [],
+    error: null,
     addItem,
     findById,
     findAndUpdate,
