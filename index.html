@@ -10,6 +10,64 @@
 </head>
 <body>
   <h1>BOOKMARK APP LOADED</h1>
+  <body>
+    <div class="container">
+      <div class="error-container"></div>
+      <h1>Shopping List</h1>
+      <form id="js-bookmark-list-form">
+        <label for="bookmark-list-entry">Add a title</label>
+        <input type="text" name="bookmark-list-title" class="js-bookmark-list-title" placeholder="e.g., ESPN">
+        <div>
+          <label for="bookmark-list-entry">Add URL</label>
+          <input type="text"  class="js-bookmark-list-url" />
+        </div>
+        <div>
+          <label for="bookmark-list-entry">Rating:</label>
+          <span>X</span><span>X</span><span>X</span><span>X</span><span>X</span>
+        </div>
+        <div>
+          <label for="bookmark-list-entry"></label>
+          <input type="text" name="bookmark-list-description" class="js-bookmark-list-description" placeholder="Add a description of your bookmark!">
+        </div>
+        <div>
+          <button type="submit" class="submit">CREATE A NEW BOOKMARK</button>
+        </div>
+      </form>
+      <div class="static">
+      <h2>MY BOOKMARKS</h2>
+      <select>
+          <option value=null selected>Filter By Stars</option>
+          <option value=1>1-Stars</option>
+          <option value=2>2-Stars</option>
+          <option value=3>3-Stars</option>
+          <option value=4>4-Stars</option>
+          <option value=5>5-Stars</option>
+      </select>
+      </div>
+      <div class="container-expanded">
+      <ul class="bookmark-list js-bookmark-list">
+          <li class="js-item-element" data-item-id="${item.id}">
+              ${itemTitle}
+          </li>
+          <li>
+            <button class="bookmark-list-expand">Expand Button</button>
+          </li>
+          <li class="js-item-element" data-item-id="${item.id}">
+            <label for="bookmark-list-entry">Rating:</label>
+            <span>X</span><span>X</span><span>X</span><span>X</span><span>X</span>  
+          </li>
+              <div class="bookmark-item-controls">
+                <button class="bookmark-item-delete js-item-delete">
+                  <span class="button-label">delete</span>
+                </button>
+                <button class="bookmark-item-visit-site js-visit-site">
+                  <span class="button-label">Go To Site!</span>
+                </button>
+              </div>
+            
+      </ul>
+    </div>
+  </div>
 
   <script type="text/javascript" src="https://code.jquery.com/jquery-3.2.1.min.js"></script>
   <script type="text/javascript" src="scripts/api.js"></script>

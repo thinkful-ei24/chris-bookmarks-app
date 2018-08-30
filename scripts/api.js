@@ -1,3 +1,5 @@
+/* global store,bookmarkList, $ */
+
 'use strict';
 
 
@@ -11,15 +13,15 @@ const API = (function(){
     $.getJSON(BASE_URL + '/items', callback);
   };
 
-  const createItem = function(title, success, error) {
-    const newItem = JSON.stringify({title});
+  //createItem will need error passed in
+  const createItem = function(name, success) {
+    const newItem = JSON.stringify({name});
     $.ajax({
       url: BASE_URL + '/items',
       method: 'POST',
       contentType: 'application/json',
       data: newItem,
       success: success,
-      error: error
     });
   };
 
@@ -41,6 +43,7 @@ const API = (function(){
     });
   };
 
+  
 
   return {
     getItems,
@@ -50,5 +53,9 @@ const API = (function(){
   };
 }());
 
+API.createItem("chris", 
+    (newItem) => {
+      store.addItem(newItem);
+    });
 
 
