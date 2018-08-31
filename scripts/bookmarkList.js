@@ -12,7 +12,8 @@ const bookmarkList = (function(){
   function render(){
     console.log(store);
     $('#bookmark-list').html('');
-    store.visibleItems.forEach(item => {
+    const visibleItems = store.items.filter(item => item.rating >= store.minRating);
+    visibleItems.forEach(item => {
       const element = generateBookmarkListString(item);
       //attach element to ul in DOM
       $('#bookmark-list').append(element);
@@ -34,7 +35,7 @@ const bookmarkList = (function(){
     
     let expandedDiv = '';
     if(item.expanded){
-    expandedDiv = `<div class="js-expanded">
+      expandedDiv = `<div class="js-expanded">
     <p>${item.desc}</p>
     <button class="js-controls bookmark-list-delete">Delete Bookmark</button>
     <a href="${item.url}">Go to ${item.title}
