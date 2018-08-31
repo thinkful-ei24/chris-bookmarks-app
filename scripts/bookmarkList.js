@@ -9,15 +9,14 @@ const bookmarkList = (function(){
         <p>${message}</p>
     `;
   }
+
   function render(){
-    console.log(store);
     $('#bookmark-list').html('');
     const visibleItems = store.items.filter(item => item.rating >= store.minRating);
     visibleItems.forEach(item => {
       const element = generateBookmarkListString(item);
       //attach element to ul in DOM
       $('#bookmark-list').append(element);
-
       if(store.error) {
         const error = generateErrorElement(store.error);
         console.log(error);
@@ -27,8 +26,6 @@ const bookmarkList = (function(){
       }
     });
   }
-
-
 
   function generateBookmarkListString(item) {
     //build book item list element
@@ -47,6 +44,7 @@ const bookmarkList = (function(){
       <li class="js-item-element" data-item-id="${item.id}">
         ${item.title}
         <button class="js-controls bookmark-list-expand">Expand Button</button>
+        <p>Rating: ${'&#x2605;'.repeat(item.rating)}</p>
       ${expandedDiv}
       </li>
   `;
