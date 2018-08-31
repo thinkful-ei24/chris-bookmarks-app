@@ -22,7 +22,12 @@
         </div>
         <div>
           <label for="bookmark-list-entry">Rating:</label>
-          <span>X</span><span>X</span><span>X</span><span>X</span><span>X</span>
+          <span class="star" data-item-id="1">X</span>
+          <span class="star" data-item-id="2">X</span>
+          <span class="star" data-item-id="3">X</span>
+          <span class="star" data-item-id="4">X</span>
+          <span class="star" data-item-id="5">X</span>
+          <input type="hidden" id="rating" value="1"/>
         </div>
         <div>
           <label for="bookmark-list-entry"></label>
@@ -45,25 +50,7 @@
       </div>
       <div class="container-expanded">
       <ul class="bookmark-list js-bookmark-list">
-          <li class="js-item-element" data-item-id="${item.id}">
-              ${itemTitle}
-          </li>
-          <li>
-            <button class="bookmark-list-expand">Expand Button</button>
-          </li>
-          <li class="js-item-element" data-item-id="${item.id}">
-            <label for="bookmark-list-entry">Rating:</label>
-            <span>X</span><span>X</span><span>X</span><span>X</span><span>X</span>  
-          </li>
-              <div class="bookmark-item-controls">
-                <button class="bookmark-item-delete js-item-delete">
-                  <span class="button-label">delete</span>
-                </button>
-                <button class="bookmark-item-visit-site js-visit-site">
-                  <span class="button-label">Go To Site!</span>
-                </button>
-              </div>
-            
+          
       </ul>
     </div>
   </div>
