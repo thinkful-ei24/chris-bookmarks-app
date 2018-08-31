@@ -18,8 +18,19 @@ const bookmarkList = (function(){
     `;
   }
   function render(){
-    store.items.forEach(item => {
-      const str = `
+    $('#bookmark-list').html('');
+    store.visibleItems.forEach(item => {
+      const element = generateBookmarkListString(item);
+      //attach element to ul in DOM
+      $('#bookmark-list').append(element);
+    });
+  }
+
+
+
+  function generateBookmarkListString(item) {
+    //build book item list element
+    return `
       <li class="js-item-element" data-item-id="${item.id}">
         ${item.title}
         <button class="bookmark-list-expand">Expand Button</button>
@@ -27,19 +38,15 @@ const bookmarkList = (function(){
         <div>
           <p>${item.desc}</p>
           <button class="bookmark-list-delete" data-item-id="${item.id}">Delete Bookmark</button>
-          <a href="${item.url}">Go to ${item.title}</a
+          <a href="${item.url}">Go to ${item.title}
+          </a>
         </div>
       </li>
-      `;
-    });
+  `;
   }
-  // base for generateBookmarkListString finished
-  // function generateBookmarkListString(bookmarkList) {
-  //   const items = bookmarkList.map((item) => generateBaseHtml(item));
-  //   return items.join('');
-  // } 
+ 
 
-  // base of render started
+  
   // function render() {
   //   if(store.error) {
   //     const e1 = generateError(store.error);
@@ -49,12 +56,30 @@ const bookmarkList = (function(){
   //   }
 
   //sort by stars
- 
-  $('.star').click((element) => {
-    const rating = element.target.getAttribute('data-item-id');
-    $('#rating').attr('value', rating);
-  });
-  
+  function handleDelete(){
+    $('#bookmark-list').on('click', '.bookmark-list-delete', (event) => {
+      const id = event.target.getAttribute('data-item-id');
+      API.deleteItem(id, function(){
+        store.findAndDelete(id);
+        render();
+      });
+    });
+  }
+
+  function handleFilterByRating(){
+    $('#filter-by-rating').on('change', (event) => {
+      const minimumRating = event.target.value;
+      store.filterByMinimumRating(minimumRating);
+      render();
+    });
+  }
+
+  function handleStarSelected(){
+    $('.star').click((event) => {
+      const rating = event.target.getAttribute('data-item-id');
+      $('#rating').attr('value', rating);
+    });
+  }
     
   function handleNewItemSubmit() {
     $('#js-bookmark-list-form').submit(function (event) {
@@ -63,9 +88,6 @@ const bookmarkList = (function(){
       const newTitle = $('.js-bookmark-list-title').val();
       const newUrl = $('.js-bookmark-list-url').val();
       const newDescription = $('.js-bookmark-list-description').val();
-      
-      console.log(rating);
-
       
       API.createItem(newTitle, newUrl, rating, newDescription,
         (newItem) => {
@@ -78,6 +100,9 @@ const bookmarkList = (function(){
 
   function bindEventListeners() {
     handleNewItemSubmit();
+    handleStarSelected();
+    handleDelete();
+    handleFilterByRating();
   }
 
   return {
