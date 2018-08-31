@@ -13,13 +13,12 @@
   <body>
     <div class="container">
       <div class="error-container"></div>
-      <h1>Shopping List</h1>
       <form id="js-bookmark-list-form">
         <label for="bookmark-list-entry">Add a title</label>
-        <input type="text" name="bookmark-list-title" class="js-bookmark-list-title" placeholder="e.g., ESPN">
+        <input type="text" name="bookmark-list-title" class="js-bookmark-list-title" value="ESPN"/>
         <div>
           <label for="bookmark-list-entry">Add URL</label>
-          <input type="text"  class="js-bookmark-list-url" />
+          <input type="text"  class="js-bookmark-list-url" value='http://www.espn.com'/>
         </div>
         <div>
           <label for="bookmark-list-entry">Rating:</label>
@@ -27,10 +26,10 @@
         </div>
         <div>
           <label for="bookmark-list-entry"></label>
-          <input type="text" name="bookmark-list-description" class="js-bookmark-list-description" placeholder="Add a description of your bookmark!">
+          <input type="text" name="bookmark-list-description" class="js-bookmark-list-description" value="The best site!"/>
         </div>
         <div>
-          <button type="submit" id="submit">CREATE A NEW BOOKMARK</button>
+          <button id="submit">CREATE A NEW BOOKMARK</button>
         </div>
       </form>
       <div class="static">

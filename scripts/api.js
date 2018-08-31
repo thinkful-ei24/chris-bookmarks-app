@@ -10,24 +10,34 @@ const API = (function(){
 
 
   const getItems = function(callback) {
-    $.getJSON(BASE_URL + '/items', callback);
+    $.getJSON(BASE_URL + '/bookmarks', callback);
   };
 
   //createItem will need error passed in
-  const createItem = function(name, success) {
-    const newItem = JSON.stringify({name});
+  // const database = {
+  //   title: title,
+  //   url: url,
+  //   rating: rating
+  // };
+
+  const createItem = function(title, url, rating, desc, success) {
+    const newItem = JSON.stringify({title, url, rating, desc});
+    console.log(newItem);
     $.ajax({
-      url: BASE_URL + '/items',
+      url: BASE_URL + '/bookmarks',
       method: 'POST',
       contentType: 'application/json',
       data: newItem,
       success: success,
+      error: function(error){
+        console.log(error);
+      }
     });
   };
 
   const updateItem = function(id, updateData, callback) {
     $.ajax({
-      url: BASE_URL + '/items/' + id,
+      url: BASE_URL + '/bookmarks/' + id,
       method: 'PATCH',
       contentType: 'application/json',
       data: updateData,
@@ -37,7 +47,7 @@ const API = (function(){
 
   const deleteItem = function(id, callback) {
     $.ajax({
-      url: BASE_URL + '/items/' + id,
+      url: BASE_URL + '/bookmarks/' + id,
       method: 'DELETE',
       success: callback
     });
@@ -53,9 +63,5 @@ const API = (function(){
   };
 }());
 
-API.createItem("chris", 
-    (newItem) => {
-      store.addItem(newItem);
-    });
 
 

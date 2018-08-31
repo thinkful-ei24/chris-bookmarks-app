@@ -18,7 +18,7 @@ const bookmarkList = (function(){
     `;
   }
 
-// base for generateBookmarkListString finished
+  // base for generateBookmarkListString finished
   // function generateBookmarkListString(bookmarkList) {
   //   const items = bookmarkList.map((item) => generateBaseHtml(item));
   //   return items.join('');
@@ -33,18 +33,32 @@ const bookmarkList = (function(){
   //     $('.error-container').empty();
   //   }
 
-    //sort by stars
+  //sort by stars
     
   function handleNewItemSubmit() {
-    $('#submit').submit(function (event) {
+    $('#js-bookmark-list-form').submit(function (event) {
       event.preventDefault();
+        
       const newTitle = $('.js-bookmark-list-title').val();
       const newUrl = $('.js-bookmark-list-url').val();
       const newDescription = $('.js-bookmark-list-description').val();
-    }
+      
+      console.log(newTitle);
+      console.log(newUrl);
+      console.log(newDescription);
+
+      API.createItem(newTitle, newUrl, 5, newDescription,
+        (newItem) => {
+          store.addItem(newItem);
+        });
+    });
   }
+
+  function bindEventListeners() {
+    handleNewItemSubmit();
+  }
+
   return {
-
+    bindEventListeners: bindEventListeners
   };
-
 }());
