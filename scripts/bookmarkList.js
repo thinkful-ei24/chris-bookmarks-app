@@ -4,7 +4,7 @@
 const bookmarkList = (function(){
 
   function generateErrorElement(message='') {
-    console.log(message)
+    console.log(message);
     return `
         <p>${message}</p>
     `;
