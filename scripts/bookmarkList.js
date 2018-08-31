@@ -3,26 +3,27 @@
 
 const bookmarkList = (function(){
 
-  function generateError(err) {
-    let message = '';
-    if(err.responseJSON && err.resonseJSON.message) {
-      message = err.responseJSON.message;
-    } else {
-      message = `${err.code} Server Error`;
-    }
+  function generateErrorElement(message='') {
+    console.log(message)
     return `
-      <section class="error-content">
-        <button id="cancel-error">X</button>
         <p>${message}</p>
-      </section>
     `;
   }
   function render(){
+    console.log(store);
     $('#bookmark-list').html('');
     store.visibleItems.forEach(item => {
       const element = generateBookmarkListString(item);
       //attach element to ul in DOM
       $('#bookmark-list').append(element);
+
+      if(store.error) {
+        const error = generateErrorElement(store.error);
+        console.log(error);
+        $('.error-container').html(error);
+      } else {
+        $('.error-container').empty();
+      }
     });
   }
 
@@ -45,6 +46,12 @@ const bookmarkList = (function(){
   `;
   }
  
+  function onLoad(){
+    API.getItems(response => {
+      store.initializeStore(response);
+      render();
+    });
+  }
 
   
   // function render() {
@@ -80,6 +87,12 @@ const bookmarkList = (function(){
       $('#rating').attr('value', rating);
     });
   }
+
+  function handleError(error) {
+    const message = error.responseJSON.message;
+    store.setError(message);
+    render();
+  }
     
   function handleNewItemSubmit() {
     $('#js-bookmark-list-form').submit(function (event) {
@@ -91,10 +104,13 @@ const bookmarkList = (function(){
       
       API.createItem(newTitle, newUrl, rating, newDescription,
         (newItem) => {
+          store.setError(null);
           store.addItem(newItem);
           render();
-        }
-      );
+        },
+        (error) => {
+          handleError(error);
+        });
     });
   }
 
@@ -106,6 +122,7 @@ const bookmarkList = (function(){
   }
 
   return {
-    bindEventListeners: bindEventListeners
+    bindEventListeners: bindEventListeners,
+    onLoad: onLoad
   };
 }());

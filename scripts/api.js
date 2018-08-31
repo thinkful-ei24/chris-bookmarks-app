@@ -20,7 +20,7 @@ const API = (function(){
   //   rating: rating
   // };
 
-  const createItem = function(title, url, rating, desc, success) {
+  const createItem = function(title, url, rating, desc, success, error) {
     const newItem = JSON.stringify({title, url, rating, desc});
     console.log(newItem);
     $.ajax({
@@ -29,9 +29,7 @@ const API = (function(){
       contentType: 'application/json',
       data: newItem,
       success: success,
-      error: function(error){
-        console.log(error);
-      }
+      error: error,  
     });
   };
 

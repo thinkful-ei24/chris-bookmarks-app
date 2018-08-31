@@ -10,6 +10,11 @@ const store = (function(){
     this.visibleItems = this.items;
   };
 
+  const initializeStore = function(items) {
+    this.items = items;
+    this.visibleItems = items;
+  };
+
   const findById = function(id) {
     return this.items.find(item => item.id === id);
   };
@@ -40,7 +45,9 @@ const store = (function(){
     findById,
     findAndUpdate,
     findAndDelete,
-    filterByMinimumRating
+    filterByMinimumRating,
+    initializeStore,
+    setError
   };
 
 }());
