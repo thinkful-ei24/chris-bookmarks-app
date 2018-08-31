@@ -1,0 +1,13 @@
+body * {
+  box-sizing: border-box;
+}
+
+
+
+.star.selected {
+  color: orange;
+}
+
+
+
+

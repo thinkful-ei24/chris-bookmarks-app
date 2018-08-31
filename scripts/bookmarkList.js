@@ -31,17 +31,22 @@ const bookmarkList = (function(){
 
   function generateBookmarkListString(item) {
     //build book item list element
+    
+    let expandedDiv = '';
+    if(item.expanded){
+    expandedDiv = `<div class="js-expanded">
+    <p>${item.desc}</p>
+    <button class="js-controls bookmark-list-delete">Delete Bookmark</button>
+    <a href="${item.url}">Go to ${item.title}
+    </a>
+    </div>`;
+    }
+    
     return `
       <li class="js-item-element" data-item-id="${item.id}">
         ${item.title}
-        <button class="bookmark-list-expand">Expand Button</button>
-
-        <div>
-          <p>${item.desc}</p>
-          <button class="bookmark-list-delete" data-item-id="${item.id}">Delete Bookmark</button>
-          <a href="${item.url}">Go to ${item.title}
-          </a>
-        </div>
+        <button class="js-controls bookmark-list-expand">Expand Button</button>
+      ${expandedDiv}
       </li>
   `;
   }
@@ -53,24 +58,23 @@ const bookmarkList = (function(){
     });
   }
 
-  
-  // function render() {
-  //   if(store.error) {
-  //     const e1 = generateError(store.error);
-  //     $('.error-container').html(e1);
-  //   } else {
-  //     $('.error-container').empty();
-  //   }
 
-  //sort by stars
   function handleDelete(){
     $('#bookmark-list').on('click', '.bookmark-list-delete', (event) => {
-      const id = event.target.getAttribute('data-item-id');
+      const id = event.target.closest('li').getAttribute('data-item-id');
       API.deleteItem(id, function(){
         store.findAndDelete(id);
         render();
       });
     });
+  }
+
+  function handleExpand() {
+    $('#bookmark-list').on('click', '.bookmark-list-expand', (event) => {
+      const id = event.target.closest('li').getAttribute('data-item-id');
+      store.toggleExpand(id);
+      render();
+      });
   }
 
   function handleFilterByRating(){
@@ -83,7 +87,15 @@ const bookmarkList = (function(){
 
   function handleStarSelected(){
     $('.star').click((event) => {
-      const rating = event.target.getAttribute('data-item-id');
+      $('.star.selected').removeClass('selected');
+      $(event.target).addClass('selected');
+      const rating = event.target.getAttribute('data-item-id'); // vanilla JS
+      $('.star').each(function(i,item){
+        if($(item).attr('data-item-id')<rating){
+          $(item).addClass('selected');
+        }
+      });
+      // const rating = $(this).attr('data-item-id');
       $('#rating').attr('value', rating);
     });
   }
@@ -119,10 +131,12 @@ const bookmarkList = (function(){
     handleStarSelected();
     handleDelete();
     handleFilterByRating();
+    handleExpand();
   }
 
   return {
     bindEventListeners: bindEventListeners,
-    onLoad: onLoad
+    onLoad: onLoad,
+    render: render
   };
 }());

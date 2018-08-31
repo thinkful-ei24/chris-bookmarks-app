@@ -5,7 +5,13 @@ const store = (function(){
     this.error = error;
   };
   
+  const toggleExpand = function(id){
+    const item = findById(id);
+    item.expanded = !item.expanded;
+  };
+
   const addItem = function(item) {
+    item.expanded = false;
     this.items.push(item);
     this.visibleItems = this.items;
   };
@@ -47,7 +53,8 @@ const store = (function(){
     findAndDelete,
     filterByMinimumRating,
     initializeStore,
-    setError
+    setError,
+    toggleExpand
   };
 
 }());
